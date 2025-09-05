@@ -1,0 +1,23 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - name: Build artifacts (sdist+wheel)
+        run: uv build
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@v1.10.3
+        with:
+          skip-existing: true

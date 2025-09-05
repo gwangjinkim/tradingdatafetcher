@@ -1,0 +1,56 @@
+[project]
+name = "tradingdatafetcher"
+version = "0.1.0"
+description = "Pure-multimethod historical data fetcher (dataclasses + plum-dispatch). Includes Investing.com index fetch."
+readme = "README.md"
+
+authors = [
+  { name = "Gwang-Jin Kim", email = "gwang.jin.kim.phd@gmail.com" },
+]
+maintainers = [
+  { name = "Gwang-Jin Kim", email = "gwang.jin.kim.phd@gmail.com" },
+]
+
+license = { text = "MIT" }
+
+keywords = ["finance", "trading", "data", "investing", "uv", "plum-dispatch", "dataclasses"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Office/Business :: Financial :: Investment",
+]
+
+requires-python = ">=3.12"
+dependencies = [
+  "pandas",
+  "requests",
+  "beautifulsoup4",
+  "lxml",
+  "html5lib",
+  "plum-dispatch",
+]
+
+[project.scripts]
+tradingdatafetcher = "tradingdatafetcher.cli:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+dev-dependencies = [
+  "ruff",
+  "pytest",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.ruff.format]
+docstring-code-format = true
