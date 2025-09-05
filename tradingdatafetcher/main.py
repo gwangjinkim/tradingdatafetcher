@@ -1,15 +1,21 @@
 from __future__ import annotations
+
 import argparse
 from datetime import date
+
 import pandas as pd
 
 from .core import (
-    SessionContext,
-    InvestingComResource,
+    Daily,
     FetchRequest,
-    Daily, Weekly, Monthly,
-    fetch, save,
+    InvestingComResource,
+    Monthly,
+    SessionContext,
+    Weekly,
+    fetch,
+    save,
 )
+
 
 def _interval_from_str(s: str):
     s = s.lower().strip()
@@ -20,6 +26,7 @@ def _interval_from_str(s: str):
     if s == "monthly":
         return Monthly()
     raise ValueError("interval must be one of: daily, weekly, monthly")
+
 
 def parse_args(argv=None) -> argparse.Namespace:
     p = argparse.ArgumentParser(
@@ -42,6 +49,7 @@ def parse_args(argv=None) -> argparse.Namespace:
     )
     return p.parse_args(argv)
 
+
 def main(argv=None) -> int:
     args = parse_args(argv)
 
@@ -62,6 +70,7 @@ def main(argv=None) -> int:
     with pd.option_context("display.max_columns", None, "display.width", 120):
         print(df.tail())
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

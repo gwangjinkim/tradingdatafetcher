@@ -1,23 +1,34 @@
 from __future__ import annotations
+
 import argparse
 from datetime import date
+
 import pandas as pd
+
 from .core import (
-    SessionContext,
-    InvestingComResource,
+    Daily,
     FetchRequest,
-    Daily, Weekly, Monthly,
-    fetch, save,
+    InvestingComResource,
+    Monthly,
+    SessionContext,
+    Weekly,
+    fetch,
+    save,
 )
+
 
 def _interval_from_str(s: str):
     s = s.lower().strip()
-    if s == "daily": return Daily()
-    if s == "weekly": return Weekly()
-    if s == "monthly": return Monthly()
+    if s == "daily":
+        return Daily()
+    if s == "weekly":
+        return Weekly()
+    if s == "monthly":
+        return Monthly()
     raise ValueError("interval must be one of: daily, weekly, monthly")
 
-def main(argv=None):
+
+def main(argv=None) -> int:
     p = argparse.ArgumentParser(
         prog="tradingdatafetcher",
         description="Fetch Investing.com historical data using pure multiple dispatch.",
@@ -54,3 +65,4 @@ def main(argv=None):
     print(f"Saved {len(df)} rows → {args.out}")
     with pd.option_context("display.max_columns", None, "display.width", 120):
         print(df.tail())
+    return 0
