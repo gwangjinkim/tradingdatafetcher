@@ -2,7 +2,6 @@ from __future__ import annotations
 import argparse
 from datetime import date
 import pandas as pd
-
 from .core import (
     SessionContext,
     InvestingComResource,
@@ -13,15 +12,12 @@ from .core import (
 
 def _interval_from_str(s: str):
     s = s.lower().strip()
-    if s == "daily":
-        return Daily()
-    if s == "weekly":
-        return Weekly()
-    if s == "monthly":
-        return Monthly()
+    if s == "daily": return Daily()
+    if s == "weekly": return Weekly()
+    if s == "monthly": return Monthly()
     raise ValueError("interval must be one of: daily, weekly, monthly")
 
-def parse_args(argv=None) -> argparse.Namespace:
+def main(argv=None):
     p = argparse.ArgumentParser(
         prog="tradingdatafetcher",
         description="Fetch Investing.com historical data using pure multiple dispatch.",
@@ -40,10 +36,7 @@ def parse_args(argv=None) -> argparse.Namespace:
         default="ARCA Gold Miners Historical Data",
         help="Header text sent to the AJAX endpoint (should match the page).",
     )
-    return p.parse_args(argv)
-
-def main(argv=None) -> int:
-    args = parse_args(argv)
+    args = p.parse_args(argv)
 
     start = date.fromisoformat(args.start)
     end = date.today() if args.end is None else date.fromisoformat(args.end)
@@ -61,7 +54,3 @@ def main(argv=None) -> int:
     print(f"Saved {len(df)} rows → {args.out}")
     with pd.option_context("display.max_columns", None, "display.width", 120):
         print(df.tail())
-    return 0
-
-if __name__ == "__main__":
-    raise SystemExit(main())
